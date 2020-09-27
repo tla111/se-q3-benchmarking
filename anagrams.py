@@ -51,7 +51,7 @@ def main(args):
         words = f.read().split()
     anagram_dict = find_anagrams(words)
     for k, v in anagram_dict.items():
-        print(f"{k} : {v}")
+        print(k, v)
 
 
 if __name__ == "__main__":
