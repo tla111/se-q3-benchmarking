@@ -1,20 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-"""
-Command line utility that accepts a word file and prints a dictionary of
-anagrams for that file.
-
-Module provides a function, find_anagrams(), which can be used to do the same
-for an arbitrary list of strings.
-"""
-
-# Your name here, and any other people/sources who helped.
-# Give credit where credit is due.
-import sys
-__author__ = "timothy la (tla111)"
-'Received help from John W'
-
-
 def alphabetize(string):
     """Returns alphabetized version of the string."""
     return "".join(sorted(string.lower()))
@@ -27,16 +10,16 @@ def find_anagrams(words):
     Example:
     {'dgo': ['dog'], 'act': ['cat', 'act']}
     """
-    # anagrams = {
-    #     alphabetize(word): [
-    #         w for w in words
-    #         if alphabetize(w) == alphabetize(word)]
-    #     for word in words}
 
     anagrams = {}
     for word in words:
+        # setdefault() -> Inserts a key and sets a default value
+        # make each word a key
         anagrams.setdefault(alphabetize(word), [])
+        # If the word is not a value
         if word not in anagrams[alphabetize(word)]:
+            # Go through individual keys' value -> Append word into
+            #   empty list
             anagrams[alphabetize(word)].append(word)
     return anagrams
 
@@ -47,12 +30,18 @@ def main(args):
         print("Please specify a word file!")
         sys.exit(1)
 
+    # Open the file that was placed an argument
+    #   when invoked
+    #   Ex: python anagrams.py words/short.txt
     with open(args[0]) as f:
+        # Read each line of the file and
+        #   split the words up
+        # Ex: able -> ["a", "b", "l", "e"]
         words = f.read().split()
+    # Use the find_anagrams function to place
+    #   the sorted word as a key and the
+    #   anagram words as a value
+    #   Ex: ('abel': ['abel', 'able'])
     anagram_dict = find_anagrams(words)
     for k, v in anagram_dict.items():
         print(k, v)
-
-
-if __name__ == "__main__":
-    main(sys.argv[1:])
